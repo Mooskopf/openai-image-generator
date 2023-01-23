@@ -15,7 +15,7 @@
         "src": "nuxt.config.ts",
         "use": "@nuxtjs/vercel-builder",
         "config": {
-          "serverFiles": ["api/main.py"]
+          "serverFiles": ["api/**"]
         }
       }
     ]
