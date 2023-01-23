@@ -9,7 +9,7 @@
     "builds": [
       {
         "src": "api/main.py",
-        "use": "@vercel/python-slim"
+        "use": "@vercel/python"
       },
       {
         "src": "nuxt.config.ts",
