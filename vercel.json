@@ -3,7 +3,7 @@
     "routes": [
       {
         "src": "/api/generate-image",
-        "dest": "api/main.py" 
+        "dest": "/api/main.py" 
       }
     ],
     "builds": [
@@ -21,4 +21,3 @@
     ]
   }
 
-  
