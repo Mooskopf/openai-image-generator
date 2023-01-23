@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 import json
-from fastapi.middleware.cors import CORSMiddleware
+#from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
