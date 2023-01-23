@@ -27,14 +27,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from "vue";
 import axios from "axios";
 
-interface ImageGenerator {
-  prompt: string;
-  size: string;
-}
 
 export default Vue.extend({
   name: "IndexPage",
@@ -47,18 +43,18 @@ export default Vue.extend({
     };
   },
   methods: {
-    async submitForm(e: any) {
+    async submitForm(e) {
       e.preventDefault();
-      const imageInput: ImageGenerator = {
-        prompt: e.target.prompt.value,
-        size: e.target.size.value,
-      };
+
+      const prompt = e.target.prompt.value
+      const size = e.target.size.value
+
       try {
         let response = await axios.post(
           "/api/generate-image",   //"http://127.0.0.1:8000/generate-image",
           {
-            prompt: imageInput.prompt,
-            size: imageInput.size,
+            prompt: prompt,
+            size: size,
           }
         );
         const data = JSON.parse(response.data)
