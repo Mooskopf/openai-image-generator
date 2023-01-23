@@ -59,12 +59,13 @@ export default Vue.extend({
         };
         try {
           let response = await axios.post(
-            "/api/generate-image", //"http://127.0.0.1:8000/generate-image",
+            "/api/generate-image", //"http://127.0.0.1:8000/api/generate-image",
             {
               prompt: imageInput.prompt,
               size: imageInput.size,
             }
           );
+          console.log(response)
           const data = JSON.parse(response.data);
           if (data.success) {
             this.error = false;
