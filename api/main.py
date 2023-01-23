@@ -32,9 +32,9 @@ app = FastAPI()
 # )
 
 
-@app.get("/")
-def read_root():
-    return ("Hello World")
+# @app.get("/")
+# def read_root():
+#     return ("Hello World")
 
 
 @app.post("/generate-image")
