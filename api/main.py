@@ -1,12 +1,9 @@
 from fastapi import FastAPI
 import requests
 from pydantic import BaseModel
-from dotenv import load_dotenv
 import os
 import json
 from fastapi.middleware.cors import CORSMiddleware
-
-load_dotenv()
 
 
 class ImageGenerator(BaseModel):
@@ -39,7 +36,7 @@ def read_root():
 
 @app.post("/api/generate-image")
 async def get_image(ImageGenerator: ImageGenerator):
-    api_key = os.getenv("API_Key")
+    api_key = os.environ['API_KEY']
     url = 'https://api.openai.com/v1/images/generations'
 
     data = {
