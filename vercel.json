@@ -9,7 +9,7 @@
     "builds": [
       {
         "src": "api/main.py",
-        "use": "@now/python:3.8-slim"
+        "use": "@now/python-slim"
       },
       {
         "src": "nuxt.config.ts",
