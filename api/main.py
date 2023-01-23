@@ -1,51 +1,45 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 import requests
-from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 import json
-#from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
 
-class ImageGenerator(BaseModel):
-    prompt: str
-    size: str
-
-
 app = FastAPI()
 
-#origins = [
-#     "http://localhost.tiangolo.com",
-#     "https://localhost.tiangolo.com",
-#     "http://localhost",
-#     "http://localhost:3000",
-# ]
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:3000",
+]
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
-# @app.get("/")
-# def read_root():
-#     return ("Hello World")
+@app.get("/")
+def read_root():
+    return ("Hello World")
 
 
 @app.post("/generate-image")
-async def get_image(ImageGenerator: ImageGenerator):
+async def get_image(prompt: str = Body(...), size: str = Body(...)):
     api_key = os.getenv("API_Key")
     url = 'https://api.openai.com/v1/images/generations'
 
     data = {
-        'prompt': ImageGenerator.prompt,
+        'prompt': prompt,
         'num_images': 1,
-        'size': ImageGenerator.size,
+        'size': size,
     }
 
     headers = {
