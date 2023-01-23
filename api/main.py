@@ -5,8 +5,9 @@ from dotenv import load_dotenv
 import os
 import json
 from fastapi.middleware.cors import CORSMiddleware
-   
+
 load_dotenv()
+
 
 class ImageGenerator(BaseModel):
     prompt: str
@@ -40,7 +41,7 @@ def read_root():
 async def get_image(ImageGenerator: ImageGenerator):
     api_key = os.getenv("API_Key")
     url = 'https://api.openai.com/v1/images/generations'
-    
+
     data = {
         'prompt': ImageGenerator.prompt,
         'num_images': 1,
