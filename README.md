@@ -1,4 +1,4 @@
-# y
+# Openai Image Generator
 
 ## Build Setup
 
