@@ -2,7 +2,7 @@
     "version": 2,
     "routes": [
       {
-        "src": "/api/generate-image",
+        "src": "/api/*",
         "dest": "api/main.py" 
       }
     ],
@@ -15,7 +15,7 @@
         "src": "nuxt.config.js",
         "use": "@nuxtjs/vercel-builder",
         "config": {
-          "serverFiles": ["api/**"]
+          "serverFiles": ["/api/*"]
         }
       }
     ]
