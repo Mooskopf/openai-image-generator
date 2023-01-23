@@ -47,7 +47,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    async submitForm(e) {
+    async submitForm(e: any) {
       e.preventDefault();
       const imageInput: ImageGenerator = {
         prompt: e.target.prompt.value,
