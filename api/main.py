@@ -50,23 +50,17 @@ async def get_image(ImageGenerator: ImageGenerator):
         'Authorization': f'Bearer {api_key}'
     }
 
-    out = {
-        "key": api_key,
-        "prompt": ImageGenerator.prompt
-    }
-    return json.dumps(out)
-
-    # try:
-    #     response = requests.post(url, json=data, headers=headers)
-    #     # The URL of the generated image
-    #     image_url = json.loads(response.text)['data'][0]['url']
-    #     out = {
-    #         "success": True,
-    #         "image": image_url
-    #     }
-    #     return json.dumps(out)
-    # except requests.exceptions.RequestException as err:
-    #     return json.dumps({
-    #         "success": False,
-    #         "error": err
-    #     })
+    try:
+        response = requests.post(url, json=data, headers=headers)
+        # The URL of the generated image
+        image_url = json.loads(response.text)['data'][0]['url']
+        out = {
+            "success": True,
+            "image": image_url
+        }
+        return json.dumps(out)
+    except requests.exceptions.RequestException as err:
+        return json.dumps({
+            "success": False,
+            "error": err
+        })
