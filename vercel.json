@@ -8,14 +8,14 @@
     ],
     "builds": [
       {
-        "src": "api/main.py",
+        "src": "api/**/*.py",
         "use": "@vercel/python"
       },
       {
         "src": "nuxt.config.js",
         "use": "@nuxtjs/vercel-builder",
         "config": {
-          "serverFiles": ["/api/*"]
+          "serverFiles": ["api/**"]
         }
       }
     ]

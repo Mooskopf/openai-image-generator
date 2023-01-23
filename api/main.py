@@ -32,12 +32,12 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/api/")
 def read_root():
     return ("Hello World")
 
 
-@app.post("/generate-image")
+@app.post("/api/generate-image")
 async def get_image(ImageGenerator: ImageGenerator):
     api_key = os.getenv("API_Key")
     url = 'https://api.openai.com/v1/images/generations'
