@@ -2,7 +2,7 @@
   <div class="app">
     <div class="container">
       <h1>CREATE IMAGE</h1>
-      <form v-on:submit="submitForm">
+      <form @submit.prevent="submitForm">
         <div class="input-text">Describe Image</div>
         <textarea required placeholder="Image description" name="prompt" />
         <div class="input-text">Select size</div>
@@ -27,10 +27,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import axios from "axios";
 
+interface ImageGenerator {
+  prompt: string;
+  size: string;
+}
 
 export default Vue.extend({
   name: "IndexPage",
@@ -43,18 +47,17 @@ export default Vue.extend({
     };
   },
   methods: {
-    async submitForm(e) {
-      e.preventDefault();
-
-      const prompt = e.target.prompt.value
-      const size = e.target.size.value
-
+    async submitForm(e: any) {
+      const imageInput: ImageGenerator = {
+        prompt: e.target.prompt.value,
+        size: e.target.size.value,
+      };
       try {
         let response = await axios.post(
           "/api/generate-image",   //"http://127.0.0.1:8000/generate-image",
           {
-            prompt: prompt,
-            size: size,
+            prompt: imageInput.prompt,
+            size: imageInput.size,
           }
         );
         const data = JSON.parse(response.data)
