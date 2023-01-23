@@ -2,19 +2,19 @@
   <div class="app">
     <div class="container">
       <h1>CREATE IMAGE</h1>
-      <form @submit.prevent="submitForm">
+      <div>
         <div class="input-text">Describe Image</div>
-        <textarea required placeholder="Image description" name="prompt" />
+        <textarea v-model="prompt" placeholder="Image description" />
         <div class="input-text">Select size</div>
-        <select name="size">
+        <select v-model="size">
           <option value="256x256">256x256</option>
           <option value="512x512">512x512</option>
           <option value="1024x1024">1024x1024</option>
         </select>
         <div>
-          <button type="submit">Submit</button>
+          <button v-on:click="submitForm">Submit</button>
         </div>
-      </form>
+      </div>
       <div v-if="error">
         <div class="error" v-html="errorContent" />
       </div>
@@ -44,35 +44,43 @@ export default Vue.extend({
       imageCreated: false,
       error: false,
       errorContent: "",
+      prompt: "",
+      size: "",
     };
   },
   methods: {
-    async submitForm(e: any) {
-      const imageInput: ImageGenerator = {
-        prompt: e.target.prompt.value,
-        size: e.target.size.value,
-      };
-      try {
-        let response = await axios.post(
-          "/api/generate-image",   //"http://127.0.0.1:8000/generate-image",
-          {
-            prompt: imageInput.prompt,
-            size: imageInput.size,
+    async submitForm() {
+      if (this.size === "" || this.prompt === "") {
+        alert("Please select size and prompt");
+      } else {
+        const imageInput: ImageGenerator = {
+          prompt: this.prompt,
+          size: this.size,
+        };
+        try {
+          let response = await axios.post(
+            "http://127.0.0.1:8000/generate-image", //"http://127.0.0.1:8000/generate-image",
+            {
+              prompt: imageInput.prompt,
+              size: imageInput.size,
+            }
+          );
+          const data = JSON.parse(response.data);
+          if (data.success) {
+            this.error = false;
+            this.imageCreated = true;
+            this.imageSrc = data.image;
+            this.prompt = ""
+            this.size = ""
+          } else {
+            this.error = true;
+            this.imageCreated = false;
+            this.errorContent = data.error;
           }
-        );
-        const data = JSON.parse(response.data)
-        if (data.success) {
-          this.error = false
-          this.imageCreated = true
-          this.imageSrc = data.image
-        } else {
-          this.error = true
-          this.imageCreated = false
-          this.errorContent = data.error
+        } catch (error) {
+          this.error = true;
+          this.errorContent = error;
         }
-      } catch (error) {
-        this.error = true
-        this.errorContent = error
       }
     },
   },

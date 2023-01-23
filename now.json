@@ -1,4 +1,0 @@
-{
-    "version": 2,
-    "builds": [{ "src": "fastapi/main.py", "use": "python:3.9" }]
-}
