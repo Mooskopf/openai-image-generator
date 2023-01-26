@@ -1,5 +1,7 @@
 # Openai Image Generator
 
+Simple one page image generator using the OpenAI Api with Nuxt in the Frontend and Fastapi for the api requests.
+
 ## Build Setup
 
 ```bash
