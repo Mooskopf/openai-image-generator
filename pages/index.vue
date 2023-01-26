@@ -15,28 +15,13 @@
           <button v-on:click="submitForm">Submit</button>
         </div>
       </div>
-      <div v-if="error">
-        <div class="error" v-html="errorContent" />
-      </div>
+      <ErrorMessage :errorContent="errorContent" v-if="error" />
       <div v-if="imageCreated">
         <a :href="imageSrc" target="none" rel="__noopener">
           <img :src="imageSrc" alt="Generated Image" />
         </a>
       </div>
-      <div v-if="waitingResponse" class="lds-spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <Spinner v-if="waitingResponse" />
     </div>
   </div>
 </template>
@@ -44,6 +29,8 @@
 <script lang="ts">
 import Vue from "vue";
 import axios from "axios";
+import Spinner from "../components/Spinner.vue"
+import ErrorMessage from "../components/ErrorMessage.vue"
 
 interface ImageGenerator {
   prompt: string;
@@ -69,6 +56,7 @@ export default Vue.extend({
         alert("Please select size and prompt");
       } else {
         this.waitingResponse = true
+        this.imageCreated = false
         const imageInput: ImageGenerator = {
           prompt: this.prompt,
           size: this.size,
@@ -106,6 +94,10 @@ export default Vue.extend({
       this.errorContent = "";
     }
   },
+  components: {
+  Spinner,
+  ErrorMessage
+}
 });
 </script>
 
@@ -164,87 +156,4 @@ body {
   margin-top: 100px;
   margin-bottom: 100px;
 }
-
-.error {
-  margin-top: 100px;
-  color: red;
-}
-
-.lds-spinner {
-  margin-top: 100px;
-  width: 80px;
-  height: 80px;
-}
-.lds-spinner div {
-  transform-origin: 40px 40px;
-  animation: lds-spinner 1.2s linear infinite;
-}
-.lds-spinner div:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 37px;
-  width: 6px;
-  height: 18px;
-  border-radius: 20%;
-  background: #fff;
-}
-.lds-spinner div:nth-child(1) {
-  transform: rotate(0deg);
-  animation-delay: -1.1s;
-}
-.lds-spinner div:nth-child(2) {
-  transform: rotate(30deg);
-  animation-delay: -1s;
-}
-.lds-spinner div:nth-child(3) {
-  transform: rotate(60deg);
-  animation-delay: -0.9s;
-}
-.lds-spinner div:nth-child(4) {
-  transform: rotate(90deg);
-  animation-delay: -0.8s;
-}
-.lds-spinner div:nth-child(5) {
-  transform: rotate(120deg);
-  animation-delay: -0.7s;
-}
-.lds-spinner div:nth-child(6) {
-  transform: rotate(150deg);
-  animation-delay: -0.6s;
-}
-.lds-spinner div:nth-child(7) {
-  transform: rotate(180deg);
-  animation-delay: -0.5s;
-}
-.lds-spinner div:nth-child(8) {
-  transform: rotate(210deg);
-  animation-delay: -0.4s;
-}
-.lds-spinner div:nth-child(9) {
-  transform: rotate(240deg);
-  animation-delay: -0.3s;
-}
-.lds-spinner div:nth-child(10) {
-  transform: rotate(270deg);
-  animation-delay: -0.2s;
-}
-.lds-spinner div:nth-child(11) {
-  transform: rotate(300deg);
-  animation-delay: -0.1s;
-}
-.lds-spinner div:nth-child(12) {
-  transform: rotate(330deg);
-  animation-delay: 0s;
-}
-@keyframes lds-spinner {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
 </style>
